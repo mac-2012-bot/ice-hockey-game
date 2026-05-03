@@ -4,14 +4,13 @@ Um jogo de hóquei no gelo visto de cima para dispositivos móveis!
 
 ## 📱 Como jogar
 
-### Controles:
-- **Jogador Vermelho (esquerda):**
-  - ↑ - Mover para cima
-  - ↓ - Mover para baixo
+### Controles (Swipe/Touch):
+- **Toca no lado esquerdo** da tela para controlar o jogador Vermelho
+- **Desliza para cima/baixo** no lado esquerdo para mover o jogador Vermelho
+- **Toca no lado direito** da tela para controlar o jogador Azul
+- **Desliza para cima/baixo** no lado direito para mover o jogador Azul
 
-- **Jogador Azul (direita):**
-  - ↑ - Mover para cima
-  - ↓ - Mover para baixo
+**Experiência mobile perfeita!** 👆📱
 
 ### Objetivo:
 Tenta marcar golos no adversário!
@@ -50,8 +49,9 @@ Tenta marcar golos no adversário!
 
 - **HTML5** - Estrutura do jogo
 - **CSS3** - Estilos e animações
-- **JavaScript** - Lógica do jogo
+- **JavaScript** - Lógica do jogo e controles por swipe
 - **Touch events** - Controles para mobile
+- **Event listeners** - Para deteção de swipe/touch
 
 ## 🎨 Design
 

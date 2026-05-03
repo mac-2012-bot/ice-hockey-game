@@ -196,13 +196,14 @@
 
         .instructions {
             position: absolute;
-            bottom: 90px;
+            bottom: 20px;
             width: 90%;
             background: rgba(0, 0, 0, 0.7);
             padding: 10px;
             border-radius: 10px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: bold;
             z-index: 100;
         }
 
@@ -215,12 +216,6 @@
             .puck {
                 width: 12px;
                 height: 12px;
-            }
-
-            .control-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
             }
         }
     </style>
@@ -242,18 +237,14 @@
             <div class="player blue" id="player-blue" style="right: 20vw; bottom: 40vh;"></div>
             <div class="puck" id="puck"></div>
             
-            <div class="player-controls">
-                <div class="control-btn" id="up-red">↑</div>
-                <div class="control-btn" id="down-red">↓</div>
-            </div>
-            
-            <div class="player-controls" style="top: 20px;">
-                <div class="control-btn" id="up-blue">↑</div>
-                <div class="control-btn" id="down-blue">↓</div>
+            <div class="swipe-indicator">
+                <div class="swipe-line"></div>
+                <div class="swipe-arrow swipe-left">↕</div>
+                <div class="swipe-arrow swipe-right">↕</div>
             </div>
             
             <div class="instructions">
-                Primeiro a 5 golos ganha! Jogador Vermelho (esquerda) vs Azul (direita)
+                DESLIZA para cima/baixo para mover os jogadores!
             </div>
         </div>
         
@@ -295,6 +286,11 @@
         // Player positions
         let playerRedY = 40;
         let playerBlueY = 40;
+
+        // Touch/swipe tracking
+        let touchY = null;
+        let isTouchingRed = false;
+        let isTouchingBlue = false;
 
         // Puck position and velocity
         let puckX = 50;
@@ -445,48 +441,75 @@
             gameOver.style.display = 'flex';
         }
 
-        // Player controls
-        upRed.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            playerRedY = Math.min(80, playerRedY + 5);
-        });
+        // Touch and swipe controls
+        document.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            const touchX = (touch.clientX / window.innerWidth) * 100;
+            
+            // Check if touching left side (red player)
+            if (touchX < 50) {
+                isTouchingRed = true;
+                touchY = touch.clientY;
+            }
+            // Check if touching right side (blue player)
+            else {
+                isTouchingBlue = true;
+                touchY = touch.clientY;
+            }
+        }, { passive: false });
 
-        downRed.addEventListener('touchstart', (e) => {
+        document.addEventListener('touchmove', (e) => {
             e.preventDefault();
-            playerRedY = Math.max(10, playerRedY - 5);
-        });
+            const touch = e.touches[0];
+            const touchX = (touch.clientX / window.innerWidth) * 100;
+            
+            if (isTouchingRed && touchX < 50) {
+                // Move red player
+                const newY = 100 - ((touch.clientY / window.innerHeight) * 100);
+                playerRedY = Math.max(10, Math.min(80, newY));
+            }
+            else if (isTouchingBlue && touchX >= 50) {
+                // Move blue player
+                const newY = 100 - ((touch.clientY / window.innerHeight) * 100);
+                playerBlueY = Math.max(10, Math.min(80, newY));
+            }
+        }, { passive: false });
 
-        upBlue.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            playerBlueY = Math.min(80, playerBlueY + 5);
-        });
-
-        downBlue.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            playerBlueY = Math.max(10, playerBlueY - 5);
+        document.addEventListener('touchend', () => {
+            isTouchingRed = false;
+            isTouchingBlue = false;
         });
 
         // Mouse controls for desktop
-        upRed.addEventListener('mousedown', () => {
-            playerRedY = Math.min(80, playerRedY + 5);
+        document.addEventListener('mousedown', (e) => {
+            const touchX = (e.clientX / window.innerWidth) * 100;
+            
+            if (touchX < 50) {
+                isTouchingRed = true;
+            } else {
+                isTouchingBlue = true;
+            }
         });
 
-        downRed.addEventListener('mousedown', () => {
-            playerRedY = Math.max(10, playerRedY - 5);
+        document.addEventListener('mousemove', (e) => {
+            if (isTouchingRed) {
+                const newY = 100 - ((e.clientY / window.innerHeight) * 100);
+                playerRedY = Math.max(10, Math.min(80, newY));
+            }
+            else if (isTouchingBlue) {
+                const newY = 100 - ((e.clientY / window.innerHeight) * 100);
+                playerBlueY = Math.max(10, Math.min(80, newY));
+            }
         });
 
-        upBlue.addEventListener('mousedown', () => {
-            playerBlueY = Math.min(80, playerBlueY + 5);
-        });
-
-        downBlue.addEventListener('mousedown', () => {
-            playerBlueY = Math.max(10, playerBlueY - 5);
-        });
-
-        // Release controls
         document.addEventListener('mouseup', () => {
-            // Reset to prevent continuous movement
+            isTouchingRed = false;
+            isTouchingBlue = false;
         });
+
+        // Remove old control buttons from DOM
+        const controls = document.querySelectorAll('.player-controls');
+        controls.forEach(control => control.remove());
 
         // Restart game
         restartBtn.addEventListener('click', () => {
