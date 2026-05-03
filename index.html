@@ -236,8 +236,8 @@
                 <span id="score-blue">0</span>
             </div>
             
-            <div class="player" id="player-red" style="left: 20vw; bottom: 50vh;"></div>
-            <div class="player blue" id="player-blue" style="right: 20vw; bottom: 50vh;"></div>
+            <div class="player" id="player-red" style="left: 20vw; bottom: 20vh;"></div>
+            <div class="player blue" id="player-blue" style="right: 20vw; bottom: 80vh;"></div>
             <div class="puck" id="puck"></div>
             
             <div class="swipe-indicator">
@@ -289,7 +289,8 @@
         // Player positions - MOVIMENTO HORIZONTAL
         let playerRedX = 20;
         let playerBlueX = 80;
-        let playerY = 50; // Mesma posição vertical para ambos
+        let playerRedY = 80; // Jogador Vermelho em baixo
+        let playerBlueY = 20; // Jogador Azul em cima
 
         // Touch/swipe tracking
         let touchX = null;
@@ -397,11 +398,11 @@
                 puckVy = Math.sin(angle) * 3;
             }
 
-            // Update positions - MOVIMENTO HORIZONTAL
+            // Update positions - UM JOGADOR EM CIMA, OUTRO EM BAIXO
             playerRed.style.left = `${playerRedX}vw`;
             playerBlue.style.left = `${playerBlueX}vw`;
-            playerRed.style.bottom = `${playerY}vh`;
-            playerBlue.style.bottom = `${playerY}vh`;
+            playerRed.style.bottom = `${playerRedY}vh`;
+            playerBlue.style.bottom = `${playerBlueY}vh`;
             puck.style.left = `${puckX}vw`;
             puck.style.bottom = `${puckY}vh`;
 

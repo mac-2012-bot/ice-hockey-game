@@ -4,9 +4,11 @@ Um jogo de hóquei no gelo visto de cima para dispositivos móveis!
 
 ## 📱 Como jogar
 
-### Controles (Swipe/Touch) - MOVIMENTO HORIZONTAL:
-- **Toca no lado ESQUERDO** da tela → Move o jogador VERMELHO (esquerda/direita)
-- **Toca no lado DIREITO** da tela → Move o jogador AZUL (esquerda/direita)
+### Controles (Swipe/Touch) - UM JOGADOR EM CIMA, OUTRO EM BAIXO:
+- **Jogador Vermelho (VERMELHO)** → Em BAIXO da pista, move-se esquerda/direita
+- **Jogador Azul (AZUL)** → Em CIMA da pista, move-se esquerda/direita
+- **Toca no lado ESQUERDO** → Move o jogador VERMELHO (baixo)
+- **Toca no lado DIREITO** → Move o jogador AZUL (cima)
 - **Podes tocar em AMBOS os lados** → Controla os DOIS jogadores ao mesmo tempo!
 - **Desliza para ESQUERDA/DIREITA** → Move o jogador respetivo horizontalmente
 
@@ -19,6 +21,7 @@ Tenta marcar golos no adversário!
 - **Disco já começa em movimento!** 🔥
 - **Disco ricocheteia nas paredes!** 🔄
 - **Balizas marcadas e visíveis!** 🎯
+- **Jogador Vermelho em BAIXO**, Jogador Azul em CIMA
 - **Controlos horizontais** - jogadores movem-se esquerda/direita
 - Golo à esquerda = Jogador Vermelho marca
 - Golo à direita = Jogador Azul marca
