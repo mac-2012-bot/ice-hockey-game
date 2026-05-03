@@ -238,8 +238,6 @@
                 <span id="score-blue">0</span>
             </div>
             
-            <div class="timer" id="timer">3:00</div>
-            
             <div class="player" id="player-red" style="left: 20vw; bottom: 40vh;"></div>
             <div class="player blue" id="player-blue" style="right: 20vw; bottom: 40vh;"></div>
             <div class="puck" id="puck"></div>
@@ -255,7 +253,7 @@
             </div>
             
             <div class="instructions">
-                Jogador Vermelho: Controles da esquerda | Jogador Azul: Controles de cima
+                Primeiro a 5 golos ganha! Jogador Vermelho (esquerda) vs Azul (direita)
             </div>
         </div>
         
@@ -271,7 +269,6 @@
         const gameState = {
             scoreRed: 0,
             scoreBlue: 0,
-            timeLeft: 180, // 3 minutes
             gameActive: true,
             puckSpeed: 2,
             puckDirection: { x: (Math.random() > 0.5 ? 1 : -1), y: (Math.random() > 0.5 ? 1 : -1) }
@@ -309,7 +306,6 @@
         function initGame() {
             gameState.scoreRed = 0;
             gameState.scoreBlue = 0;
-            gameState.timeLeft = 180;
             gameState.gameActive = true;
             gameState.puckSpeed = 2;
             
@@ -321,7 +317,6 @@
             puckVy = 0;
             
             updateScore();
-            updateTimer();
             gameOver.style.display = 'none';
             
             // Random initial puck direction
@@ -335,15 +330,14 @@
         function updateScore() {
             scoreRed.textContent = gameState.scoreRed;
             scoreBlue.textContent = gameState.scoreBlue;
+            
+            // Check win condition
+            if (gameState.scoreRed >= 5 || gameState.scoreBlue >= 5) {
+                setTimeout(endGame, 500);
+            }
         }
 
         // Update timer
-        function updateTimer() {
-            const minutes = Math.floor(gameState.timeLeft / 60);
-            const seconds = gameState.timeLeft % 60;
-            timer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        }
-
         // Game loop
         function gameLoop() {
             if (!gameState.gameActive) return;
@@ -399,14 +393,6 @@
             puck.style.left = `${puckX}vw`;
             puck.style.bottom = `${puckY}vh`;
 
-            // Timer
-            gameState.timeLeft--;
-            updateTimer();
-
-            if (gameState.timeLeft <= 0) {
-                endGame();
-            }
-
             requestAnimationFrame(gameLoop);
         }
 
@@ -447,13 +433,13 @@
             
             if (gameState.scoreRed > gameState.scoreBlue) {
                 gameOverTitle.textContent = 'VERMELHO VENCE!';
-                gameOverResult.textContent = `Fim do jogo! Vermelho: ${gameState.scoreRed} - Azul: ${gameState.scoreBlue}`;
+                gameOverResult.textContent = `Vermelho: ${gameState.scoreRed} - Azul: ${gameState.scoreBlue}`;
             } else if (gameState.scoreBlue > gameState.scoreRed) {
                 gameOverTitle.textContent = 'AZUL VENCE!';
-                gameOverResult.textContent = `Fim do jogo! Azul: ${gameState.scoreBlue} - Vermelho: ${gameState.scoreRed}`;
+                gameOverResult.textContent = `Azul: ${gameState.scoreBlue} - Vermelho: ${gameState.scoreRed}`;
             } else {
                 gameOverTitle.textContent = 'EMPATE!';
-                gameOverResult.textContent = `Fim do jogo! ${gameState.scoreRed} - ${gameState.scoreBlue}`;
+                gameOverResult.textContent = `${gameState.scoreRed} - ${gameState.scoreBlue}`;
             }
             
             gameOver.style.display = 'flex';
@@ -505,7 +491,7 @@
         // Restart game
         restartBtn.addEventListener('click', () => {
             initGame();
-            gameLoop();
+            requestAnimationFrame(gameLoop);
         });
 
         // Start game

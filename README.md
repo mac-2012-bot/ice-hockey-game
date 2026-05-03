@@ -19,9 +19,9 @@ Tenta marcar golos no adversário!
 - Disco na baliza direita = Golo para o jogador Vermelho
 
 ### Regras:
-- 3 minutos de jogo
-- Primeiro a 5 golos ganha
-- Se empate após 3 minutos, jogo termina em empate
+- Primeiro jogador a 5 golos ganha
+- Jogo continua até alguém atingir 5 golos
+- Empate possível se ambos atingirem 5 golos ao mesmo tempo
 
 ## 🎮 Funcionalidades
 
@@ -71,14 +71,8 @@ O jogo adapta-se automaticamente a:
 
 Para personalizar o jogo:
 
-### Alterar tempo de jogo:
-Edita a linha 180 no JavaScript:
-```javascript
-timeLeft: 180, // 3 minutos (180 segundos)
-```
-
 ### Alterar pontuação para vitória:
-Edita a linha 230 no JavaScript:
+Edita a linha 200 no JavaScript:
 ```javascript
 if (gameState.scoreRed >= 5 || gameState.scoreBlue >= 5) {
 ```
