@@ -4,11 +4,11 @@ Um jogo de hóquei no gelo visto de cima para dispositivos móveis!
 
 ## 📱 Como jogar
 
-### Controles (Swipe/Touch) - MULTI-TOUCH:
-- **Toca no lado ESQUERDO** da tela → Move o jogador VERMELHO (cima/baixo)
-- **Toca no lado DIREITO** da tela → Move o jogador AZUL (cima/baixo)
+### Controles (Swipe/Touch) - MOVIMENTO HORIZONTAL:
+- **Toca no lado ESQUERDO** da tela → Move o jogador VERMELHO (esquerda/direita)
+- **Toca no lado DIREITO** da tela → Move o jogador AZUL (esquerda/direita)
 - **Podes tocar em AMBOS os lados** → Controla os DOIS jogadores ao mesmo tempo!
-- **Desliza para CIMA/BAIXO** → Move o jogador respetivo na vertical
+- **Desliza para ESQUERDA/DIREITA** → Move o jogador respetivo horizontalmente
 
 **Multi-touch suportado!** 👆👆
 
@@ -18,9 +18,10 @@ Um jogo de hóquei no gelo visto de cima para dispositivos móveis!
 Tenta marcar golos no adversário!
 - **Disco já começa em movimento!** 🔥
 - **Disco ricocheteia nas paredes!** 🔄
-- **Balizas em cima e em baixo** como num jogo de hóquei real!
-- Golo no topo = Jogador Vermelho marca
-- Golo na base = Jogador Azul marca
+- **Balizas marcadas e visíveis!** 🎯
+- **Controlos horizontais** - jogadores movem-se esquerda/direita
+- Golo à esquerda = Jogador Vermelho marca
+- Golo à direita = Jogador Azul marca
 
 ### Regras:
 - Primeiro jogador a 5 golos ganha
@@ -30,10 +31,11 @@ Tenta marcar golos no adversário!
 ## 🎮 Funcionalidades
 
 ✅ **Design responsivo** - Perfeito para telemóvel
-✅ **Controles touch** - Swipe para mover jogadores
+✅ **Controles touch** - Swipe horizontal para mover jogadores
 ✅ **Disco em movimento** - Começa já a mover-se desde o início! 🔥
 ✅ **Física de ricochete** - Disco ricocheteia nas paredes! 🔄
-✅ **Balizas em cima/baixo** - Como num jogo de hóquei real! 🏒
+✅ **Balizas marcadas** - Visíveis e coloridas! 🎯
+✅ **Multi-touch** - Controla os 2 jogadores ao mesmo tempo! 👆👆
 ✅ **Física realista** - Disco move-se com inércia
 ✅ **Colisões** - Jogadores batem no disco
 ✅ **Sistema de pontuação** - Mostra gols de ambos os jogadores

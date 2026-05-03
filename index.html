@@ -60,9 +60,11 @@
             left: 50%;
             transform: translateX(-50%);
             width: 30vw;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.8);
+            height: 15px;
+            background: linear-gradient(90deg, #ff0000, #ff4500);
             z-index: 5;
+            border: 3px solid gold;
+            box-shadow: 0 0 15px gold;
         }
 
         .goal-top {
@@ -234,8 +236,8 @@
                 <span id="score-blue">0</span>
             </div>
             
-            <div class="player" id="player-red" style="left: 20vw; bottom: 40vh;"></div>
-            <div class="player blue" id="player-blue" style="right: 20vw; bottom: 40vh;"></div>
+            <div class="player" id="player-red" style="left: 20vw; bottom: 50vh;"></div>
+            <div class="player blue" id="player-blue" style="right: 20vw; bottom: 50vh;"></div>
             <div class="puck" id="puck"></div>
             
             <div class="swipe-indicator">
@@ -284,12 +286,13 @@
         const upBlue = document.getElementById('up-blue');
         const downBlue = document.getElementById('down-blue');
 
-        // Player positions
-        let playerRedY = 40;
-        let playerBlueY = 40;
+        // Player positions - MOVIMENTO HORIZONTAL
+        let playerRedX = 20;
+        let playerBlueX = 80;
+        let playerY = 50; // Mesma posição vertical para ambos
 
         // Touch/swipe tracking
-        let touchY = null;
+        let touchX = null;
         let isTouchingRed = false;
         let isTouchingBlue = false;
 
@@ -359,16 +362,16 @@
                 puckVy = -Math.abs(puckVy) * 0.8; // Ricochete na base
             }
 
-            // Check goal (top) - Golo para jogador Vermelho
-            if (puckY <= 5 && puckX >= 35 && puckX <= 65) {
+            // Check goal (left) - Golo para jogador Vermelho
+            if (puckX <= 5 && playerY >= 40 && playerY <= 60) {
                 gameState.scoreRed++;
                 updateScore();
                 resetPuck();
                 checkWinCondition();
             }
 
-            // Check goal (bottom) - Golo para jogador Azul
-            if (puckY >= 95 && puckX >= 35 && puckX <= 65) {
+            // Check goal (right) - Golo para jogador Azul
+            if (puckX >= 95 && playerY >= 40 && playerY <= 60) {
                 gameState.scoreBlue++;
                 updateScore();
                 resetPuck();
@@ -394,9 +397,11 @@
                 puckVy = Math.sin(angle) * 3;
             }
 
-            // Update positions
-            playerRed.style.bottom = `${playerRedY}vh`;
-            playerBlue.style.bottom = `${playerBlueY}vh`;
+            // Update positions - MOVIMENTO HORIZONTAL
+            playerRed.style.left = `${playerRedX}vw`;
+            playerBlue.style.left = `${playerBlueX}vw`;
+            playerRed.style.bottom = `${playerY}vh`;
+            playerBlue.style.bottom = `${playerY}vh`;
             puck.style.left = `${puckX}vw`;
             puck.style.bottom = `${puckY}vh`;
 
@@ -452,7 +457,7 @@
             gameOver.style.display = 'flex';
         }
 
-        // Touch and swipe controls - MULTI-TOUCH
+        // Touch and swipe controls - MULTI-TOUCH HORIZONTAL
         document.addEventListener('touchstart', (e) => {
             // Check for multiple touches
             if (e.touches.length === 1) {
@@ -478,16 +483,13 @@
             for (let i = 0; i < e.touches.length; i++) {
                 const touch = e.touches[i];
                 const touchX = (touch.clientX / window.innerWidth) * 100;
-                const touchY = touch.clientY;
                 
                 if (touchX < 50) {
-                    // Move red player VERTICAL (cima/baixo)
-                    const newY = 100 - ((touchY / window.innerHeight) * 100);
-                    playerRedY = Math.max(10, Math.min(80, newY));
+                    // Move red player HORIZONTAL (esquerda/direita)
+                    playerRedX = 20 + ((touchX / 50) * 15);
                 } else {
-                    // Move blue player VERTICAL (cima/baixo)
-                    const newY = 100 - ((touchY / window.innerHeight) * 100);
-                    playerBlueY = Math.max(10, Math.min(80, newY));
+                    // Move blue player HORIZONTAL (esquerda/direita)
+                    playerBlueX = 85 - (((touchX - 50) / 50) * 15);
                 }
             }
         }, { passive: false });
@@ -508,13 +510,11 @@
             }
         });
 
-        // Mouse controls for desktop - SINGLE MOUSE
+        // Mouse controls for desktop - HORIZONTAL MOVEMENT
         let mouseActive = false;
-        let mouseX = 0;
         
         document.addEventListener('mousedown', (e) => {
             mouseActive = true;
-            mouseX = e.clientX;
             
             if (e.clientX < window.innerWidth / 2) {
                 isTouchingRed = true;
@@ -525,13 +525,13 @@
 
         document.addEventListener('mousemove', (e) => {
             if (mouseActive) {
-                const newY = 100 - ((e.clientY / window.innerHeight) * 100);
+                const mousePercent = (e.clientX / window.innerWidth) * 100;
                 
                 if (isTouchingRed) {
-                    playerRedY = Math.max(10, Math.min(80, newY));
+                    playerRedX = 20 + ((mousePercent / 50) * 15);
                 }
                 if (isTouchingBlue) {
-                    playerBlueY = Math.max(10, Math.min(80, newY));
+                    playerBlueX = 85 - (((mousePercent - 50) / 50) * 15);
                 }
             }
         });
