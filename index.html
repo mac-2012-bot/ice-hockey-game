@@ -289,8 +289,8 @@
         // Player positions - MOVIMENTO HORIZONTAL
         let playerRedX = 20;
         let playerBlueX = 80;
-        let playerRedY = 80; // Jogador Vermelho em baixo
-        let playerBlueY = 20; // Jogador Azul em cima
+        let playerRedY = 80; // Jogador Vermelho em baixo (20% de baixo)
+        let playerBlueY = 20; // Jogador Azul em cima (80% de cima)
 
         // Touch/swipe tracking
         let touchX = null;
@@ -398,7 +398,7 @@
                 puckVy = Math.sin(angle) * 3;
             }
 
-            // Update positions - UM JOGADOR EM CIMA, OUTRO EM BAIXO
+            // Update positions - jogadores em cima e em baixo
             playerRed.style.left = `${playerRedX}vw`;
             playerBlue.style.left = `${playerBlueX}vw`;
             playerRed.style.bottom = `${playerRedY}vh`;
@@ -485,12 +485,12 @@
                 const touch = e.touches[i];
                 const touchX = (touch.clientX / window.innerWidth) * 100;
                 
-                if (touchX < 50) {
-                    // Move red player HORIZONTAL (esquerda/direita)
-                    playerRedX = 20 + ((touchX / 50) * 15);
-                } else {
-                    // Move blue player HORIZONTAL (esquerda/direita)
-                    playerBlueX = 85 - (((touchX - 50) / 50) * 15);
+                if (touchX < 50 && isTouchingRed) {
+                    // Move red player HORIZONTAL (esquerda/direita) - jogador em baixo
+                    playerRedX = Math.max(5, Math.min(35, 20 + ((touchX / 50) * 15)));
+                } else if (isTouchingBlue) {
+                    // Move blue player HORIZONTAL (esquerda/direita) - jogador em cima
+                    playerBlueX = Math.max(65, Math.min(95, 85 - (((touchX - 50) / 50) * 15)));
                 }
             }
         }, { passive: false });
@@ -498,16 +498,8 @@
         document.addEventListener('touchend', (e) => {
             // Check which touches ended
             if (e.changedTouches) {
-                for (let i = 0; i < e.changedTouches.length; i++) {
-                    const touch = e.changedTouches[i];
-                    const touchX = (touch.clientX / window.innerWidth) * 100;
-                    
-                    if (touchX < 50) {
-                        isTouchingRed = false;
-                    } else {
-                        isTouchingBlue = false;
-                    }
-                }
+                isTouchingRed = false;
+                isTouchingBlue = false;
             }
         });
 
@@ -529,10 +521,10 @@
                 const mousePercent = (e.clientX / window.innerWidth) * 100;
                 
                 if (isTouchingRed) {
-                    playerRedX = 20 + ((mousePercent / 50) * 15);
+                    playerRedX = Math.max(5, Math.min(35, 20 + ((mousePercent / 50) * 15)));
                 }
                 if (isTouchingBlue) {
-                    playerBlueX = 85 - (((mousePercent - 50) / 50) * 15);
+                    playerBlueX = Math.max(65, Math.min(95, 85 - (((mousePercent - 50) / 50) * 15)));
                 }
             }
         });
@@ -545,6 +537,8 @@
 
         document.addEventListener('mouseleave', () => {
             mouseActive = false;
+            isTouchingRed = false;
+            isTouchingBlue = false;
         });
 
         // Remove old control buttons from DOM
