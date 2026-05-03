@@ -309,17 +309,13 @@
             playerBlueY = 40;
             puckX = 50;
             puckY = 50;
-            puckVx = 0;
-            puckVy = 0;
+            
+            // Disco já em movimento desde o início!
+            puckVx = (Math.random() > 0.5 ? 1 : -1) * (1 + Math.random() * 1.5);
+            puckVy = (Math.random() > 0.5 ? 1 : -1) * (1 + Math.random() * 1.5);
             
             updateScore();
             gameOver.style.display = 'none';
-            
-            // Random initial puck direction
-            gameState.puckDirection = {
-                x: (Math.random() > 0.5 ? 1 : -1),
-                y: (Math.random() > 0.5 ? 1 : -1)
-            };
         }
 
         // Update score display
@@ -341,6 +337,8 @@
             // Update puck position
             puckX += puckVx * gameState.puckSpeed;
             puckY += puckVy * gameState.puckSpeed;
+            
+            // Disco já está em movimento desde o início!
 
             // Boundary collision
             if (puckX <= 5) puckX = 5;
