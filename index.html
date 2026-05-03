@@ -464,12 +464,12 @@
             const touchX = (touch.clientX / window.innerWidth) * 100;
             
             if (isTouchingRed && touchX < 50) {
-                // Move red player
+                // Move red player VERTICAL (cima/baixo)
                 const newY = 100 - ((touch.clientY / window.innerHeight) * 100);
                 playerRedY = Math.max(10, Math.min(80, newY));
             }
             else if (isTouchingBlue && touchX >= 50) {
-                // Move blue player
+                // Move blue player VERTICAL (cima/baixo)
                 const newY = 100 - ((touch.clientY / window.innerHeight) * 100);
                 playerBlueY = Math.max(10, Math.min(80, newY));
             }
@@ -493,10 +493,12 @@
 
         document.addEventListener('mousemove', (e) => {
             if (isTouchingRed) {
+                // Move red player VERTICAL (cima/baixo)
                 const newY = 100 - ((e.clientY / window.innerHeight) * 100);
                 playerRedY = Math.max(10, Math.min(80, newY));
             }
             else if (isTouchingBlue) {
+                // Move blue player VERTICAL (cima/baixo)
                 const newY = 100 - ((e.clientY / window.innerHeight) * 100);
                 playerBlueY = Math.max(10, Math.min(80, newY));
             }

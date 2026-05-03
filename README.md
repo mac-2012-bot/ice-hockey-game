@@ -4,11 +4,11 @@ Um jogo de hóquei no gelo visto de cima para dispositivos móveis!
 
 ## 📱 Como jogar
 
-### Controles (Swipe/Touch):
-- **Toca no lado esquerdo** da tela para controlar o jogador Vermelho
-- **Desliza para cima/baixo** no lado esquerdo para mover o jogador Vermelho
-- **Toca no lado direito** da tela para controlar o jogador Azul
-- **Desliza para cima/baixo** no lado direito para mover o jogador Azul
+### Controles (Swipe/Touch) - MOVIMENTO VERTICAL:
+- **Toca no lado ESQUERDO** da tela para controlar o jogador VERMELHO
+- **Desliza para CIMA/BAIXO** no lado esquerdo → Move o jogador VERMELHO na vertical
+- **Toca no lado DIREITO** da tela para controlar o jogador AZUL
+- **Desliza para CIMA/BAIXO** no lado direito → Move o jogador AZUL na vertical
 
 **Experiência mobile perfeita!** 👆📱
 
