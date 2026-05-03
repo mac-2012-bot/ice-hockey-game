@@ -441,50 +441,71 @@
             gameOver.style.display = 'flex';
         }
 
-        // Touch and swipe controls
+        // Touch and swipe controls - MULTI-TOUCH
         document.addEventListener('touchstart', (e) => {
-            const touch = e.touches[0];
-            const touchX = (touch.clientX / window.innerWidth) * 100;
-            
-            // Check if touching left side (red player)
-            if (touchX < 50) {
+            // Check for multiple touches
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                const touchX = (touch.clientX / window.innerWidth) * 100;
+                
+                if (touchX < 50) {
+                    isTouchingRed = true;
+                } else {
+                    isTouchingBlue = true;
+                }
+            } else if (e.touches.length >= 2) {
+                // Multi-touch: control both players
                 isTouchingRed = true;
-                touchY = touch.clientY;
-            }
-            // Check if touching right side (blue player)
-            else {
                 isTouchingBlue = true;
-                touchY = touch.clientY;
             }
         }, { passive: false });
 
         document.addEventListener('touchmove', (e) => {
             e.preventDefault();
-            const touch = e.touches[0];
-            const touchX = (touch.clientX / window.innerWidth) * 100;
             
-            if (isTouchingRed && touchX < 50) {
-                // Move red player VERTICAL (cima/baixo)
-                const newY = 100 - ((touch.clientY / window.innerHeight) * 100);
-                playerRedY = Math.max(10, Math.min(80, newY));
-            }
-            else if (isTouchingBlue && touchX >= 50) {
-                // Move blue player VERTICAL (cima/baixo)
-                const newY = 100 - ((touch.clientY / window.innerHeight) * 100);
-                playerBlueY = Math.max(10, Math.min(80, newY));
+            // Control both players simultaneously with multi-touch
+            for (let i = 0; i < e.touches.length; i++) {
+                const touch = e.touches[i];
+                const touchX = (touch.clientX / window.innerWidth) * 100;
+                const touchY = touch.clientY;
+                
+                if (touchX < 50) {
+                    // Move red player VERTICAL (cima/baixo)
+                    const newY = 100 - ((touchY / window.innerHeight) * 100);
+                    playerRedY = Math.max(10, Math.min(80, newY));
+                } else {
+                    // Move blue player VERTICAL (cima/baixo)
+                    const newY = 100 - ((touchY / window.innerHeight) * 100);
+                    playerBlueY = Math.max(10, Math.min(80, newY));
+                }
             }
         }, { passive: false });
 
-        document.addEventListener('touchend', () => {
-            isTouchingRed = false;
-            isTouchingBlue = false;
+        document.addEventListener('touchend', (e) => {
+            // Check which touches ended
+            if (e.changedTouches) {
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    const touch = e.changedTouches[i];
+                    const touchX = (touch.clientX / window.innerWidth) * 100;
+                    
+                    if (touchX < 50) {
+                        isTouchingRed = false;
+                    } else {
+                        isTouchingBlue = false;
+                    }
+                }
+            }
         });
 
-        // Mouse controls for desktop
+        // Mouse controls for desktop - SINGLE MOUSE
+        let mouseActive = false;
+        let mouseX = 0;
+        
         document.addEventListener('mousedown', (e) => {
-            const touchX = (e.clientX / window.innerWidth) * 100;
+            mouseActive = true;
+            mouseX = e.clientX;
             
-            if (touchX < 50) {
+            if (e.clientX < window.innerWidth / 2) {
                 isTouchingRed = true;
             } else {
                 isTouchingBlue = true;
@@ -492,21 +513,26 @@
         });
 
         document.addEventListener('mousemove', (e) => {
-            if (isTouchingRed) {
-                // Move red player VERTICAL (cima/baixo)
+            if (mouseActive) {
                 const newY = 100 - ((e.clientY / window.innerHeight) * 100);
-                playerRedY = Math.max(10, Math.min(80, newY));
-            }
-            else if (isTouchingBlue) {
-                // Move blue player VERTICAL (cima/baixo)
-                const newY = 100 - ((e.clientY / window.innerHeight) * 100);
-                playerBlueY = Math.max(10, Math.min(80, newY));
+                
+                if (isTouchingRed) {
+                    playerRedY = Math.max(10, Math.min(80, newY));
+                }
+                if (isTouchingBlue) {
+                    playerBlueY = Math.max(10, Math.min(80, newY));
+                }
             }
         });
 
         document.addEventListener('mouseup', () => {
+            mouseActive = false;
             isTouchingRed = false;
             isTouchingBlue = false;
+        });
+
+        document.addEventListener('mouseleave', () => {
+            mouseActive = false;
         });
 
         // Remove old control buttons from DOM
