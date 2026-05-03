@@ -340,11 +340,23 @@
             
             // Disco já está em movimento desde o início!
 
-            // Boundary collision
-            if (puckX <= 5) puckX = 5;
-            if (puckX >= 95) puckX = 95;
-            if (puckY <= 5) puckY = 5;
-            if (puckY >= 95) puckY = 95;
+            // Boundary collision with ricochet physics
+            if (puckX <= 5) {
+                puckX = 5;
+                puckVx = Math.abs(puckVx) * 0.8; // Ricochete na parede esquerda
+            }
+            if (puckX >= 95) {
+                puckX = 95;
+                puckVx = -Math.abs(puckVx) * 0.8; // Ricochete na parede direita
+            }
+            if (puckY <= 5) {
+                puckY = 5;
+                puckVy = Math.abs(puckVy) * 0.8; // Ricochete no topo
+            }
+            if (puckY >= 95) {
+                puckY = 95;
+                puckVy = -Math.abs(puckVy) * 0.8; // Ricochete na base
+            }
 
             // Check goal (left)
             if (puckX <= 5 && puckY >= 35 && puckY <= 65) {
