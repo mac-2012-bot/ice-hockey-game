@@ -55,21 +55,22 @@
             transform: translateX(-50%);
         }
 
-        .goal-left, .goal-right {
+        .goal-top, .goal-bottom {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 10px;
-            height: 30vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30vw;
+            height: 10px;
             background: rgba(255, 255, 255, 0.8);
+            z-index: 5;
         }
 
-        .goal-left {
-            left: 5px;
+        .goal-top {
+            top: 5px;
         }
 
-        .goal-right {
-            right: 5px;
+        .goal-bottom {
+            bottom: 5px;
         }
 
         .player {
@@ -358,17 +359,17 @@
                 puckVy = -Math.abs(puckVy) * 0.8; // Ricochete na base
             }
 
-            // Check goal (left)
-            if (puckX <= 5 && puckY >= 35 && puckY <= 65) {
-                gameState.scoreBlue++;
+            // Check goal (top) - Golo para jogador Vermelho
+            if (puckY <= 5 && puckX >= 35 && puckX <= 65) {
+                gameState.scoreRed++;
                 updateScore();
                 resetPuck();
                 checkWinCondition();
             }
 
-            // Check goal (right)
-            if (puckX >= 95 && puckY >= 35 && puckY <= 65) {
-                gameState.scoreRed++;
+            // Check goal (bottom) - Golo para jogador Azul
+            if (puckY >= 95 && puckX >= 35 && puckX <= 65) {
+                gameState.scoreBlue++;
                 updateScore();
                 resetPuck();
                 checkWinCondition();

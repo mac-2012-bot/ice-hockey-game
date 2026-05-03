@@ -18,8 +18,9 @@ Um jogo de hóquei no gelo visto de cima para dispositivos móveis!
 Tenta marcar golos no adversário!
 - **Disco já começa em movimento!** 🔥
 - **Disco ricocheteia nas paredes!** 🔄
-- Disco na baliza esquerda = Golo para o jogador Azul
-- Disco na baliza direita = Golo para o jogador Vermelho
+- **Balizas em cima e em baixo** como num jogo de hóquei real!
+- Golo no topo = Jogador Vermelho marca
+- Golo na base = Jogador Azul marca
 
 ### Regras:
 - Primeiro jogador a 5 golos ganha
@@ -31,7 +32,8 @@ Tenta marcar golos no adversário!
 ✅ **Design responsivo** - Perfeito para telemóvel
 ✅ **Controles touch** - Swipe para mover jogadores
 ✅ **Disco em movimento** - Começa já a mover-se desde o início! 🔥
-✅ **Física de ricochete** - Disco ricocheteia nas paredes com ângulos realistas! 🔄
+✅ **Física de ricochete** - Disco ricocheteia nas paredes! 🔄
+✅ **Balizas em cima/baixo** - Como num jogo de hóquei real! 🏒
 ✅ **Física realista** - Disco move-se com inércia
 ✅ **Colisões** - Jogadores batem no disco
 ✅ **Sistema de pontuação** - Mostra gols de ambos os jogadores
